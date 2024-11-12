@@ -1,6 +1,9 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-WORKDIR /chatbot
+WORKDIR /mechanic_ai
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y postgresql-client
 
 COPY requirements.txt .
 
