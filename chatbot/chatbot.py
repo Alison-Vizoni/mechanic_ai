@@ -12,7 +12,19 @@ from config import settings
 
 
 class Chatbot:
+    _instance = None
+    _initialized = False
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Chatbot, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self):
+        if not self._initialized:
+            self.thread_id = str(uuid4())
+            self._initialized = True
+
         self.chatbot_model_id = settings.CHATBOT_MODEL_ID
         self.model = ChatGroq(api_key=settings.API_KEY, model_name=self.chatbot_model_id, temperature=0)
         self.state_graph = StateGraph(state_schema=MessagesState)
@@ -26,7 +38,7 @@ class Chatbot:
 
             system_message = self._get_system_message()
             input_message = HumanMessage(content=question)
-            config = {'configurable': {'thread_id': str(uuid4())}}
+            config = {'configurable': {'thread_id': self.thread_id}}
             input_message = {'messages': [system_message, input_message]}
 
             final_state = app.invoke(input=input_message, config=config)
@@ -42,7 +54,7 @@ class Chatbot:
 
         return {'messages': [response]}
 
-    def should_continue(self, state: MessagesState) -> Literal["tools", END]:
+    def should_continue(self, state: MessagesState):
         messages = state.get('messages', [None])
         last_message = messages[-1]
         if last_message and last_message.tool_calls:
