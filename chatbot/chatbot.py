@@ -31,22 +31,22 @@ class Chatbot:
 
         final_state = app.invoke(input=[system_message, input_message], config=config)
 
-        response_message = final_state.get("messages", [None])[-1]
+        response_message = final_state.get('messages', [None])[-1]
         if response_message and hasattr(response_message, 'content'):
             return response_message.content
-        return "Houve alguma falha durante o processamento. Tente novamente."
+        return 'Houve alguma falha durante o processamento. Tente novamente.'
 
     def call_model(self, state: MessagesState):
         messages = state['messages']
         response = self.model.invoke(messages)
 
-        return {"messages": [response]}
+        return {'messages': [response]}
 
     def should_continue(self, state: MessagesState) -> Literal["tools", END]:
         messages = state.get('messages', [None])
         last_message = messages[-1]
         if last_message and last_message.tool_calls:
-            return "tools"
+            return 'tools'
         return END
 
     def _get_app(self):
