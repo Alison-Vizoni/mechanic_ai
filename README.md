@@ -12,8 +12,11 @@ desenvolvimento e a implantação do projeto, utilizei Docker Compose para isola
 # Configuração
 Para começar, crie um arquivo `.env` na raiz do projeto e adicione as variaveis abaixo:
 ```
+# Obrigatório
 API_KEY=
 CHATBOT_MODEL_ID=
+
+# Opcional
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 POSTGRES_HOST=
