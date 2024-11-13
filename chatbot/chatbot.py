@@ -41,7 +41,10 @@ class Chatbot:
             config = {'configurable': {'thread_id': self.thread_id}}
             input_message = {'messages': [system_message, input_message]}
 
-            final_state = app.invoke(input=input_message, config=config)
+            try:
+                final_state = app.invoke(input=input_message, config=config)
+            except Exception:
+                return 'Houve alguma falha durante o processamento. Tente novamente.'
 
         response_message = final_state.get('messages', [None])[-1]
         if response_message and hasattr(response_message, 'content'):
