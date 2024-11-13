@@ -12,10 +12,14 @@ desenvolvimento e a implantação do projeto, utilizei Docker Compose para isola
 # Configuração
 Para começar, crie um arquivo `.env` na raiz do projeto e adicione as variaveis abaixo:
 ```
-API_KEY='your api key'
-CHATBOT_MODEL_ID='your model id chosen'
+API_KEY=
+CHATBOT_MODEL_ID=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=
+POSTGRES_PORT=
+POSTGRES_DB_NAME=
 ```
-Foi utilizado o llama3-70b-8192 para o CHATBOT_MODEL_ID.
 
 # Execução do Projeto
 Para inicializar o projeto, basta executar o comando abaixo:
